@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard - Charity Platform</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="/index.html" class="logo">CharityHub</a>
+      <div class="nav-links">
+        <a href="/index.html">Campaigns</a>
+        <a href="/dashboard.html" class="active">Dashboard</a>
+        <a href="/admin.html" id="admin-link" class="hidden">Admin</a>
+        <span id="user-info"></span>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>My Dashboard</h1>
+
+    <div class="grid grid-2 mb-2">
+      <div class="card">
+        <h3>Profile Information</h3>
+        <div id="profile-info">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+        <button class="btn btn-outline mt-2" onclick="showUpdateProfile()">
+          Update Profile
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>Donation Stats</h3>
+        <p>Total Donated: <strong id="total-donated">$0.00</strong></p>
+        <p>Number of Donations: <strong id="donation-count">0</strong></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>My Donations</h2>
+      <div id="donations-container">
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Profile Modal -->
+  <div id="profile-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Update Profile</h3>
+        <button class="modal-close" onclick="closeProfileModal()">&times;</button>
+      </div>
+      <form id="update-profile-form">
+        <div class="form-group">
+          <label for="new-username">Username</label>
+          <input type="text" id="new-username" class="form-control" minlength="3">
+        </div>
+        <div class="form-group">
+          <label for="new-email">Email</label>
+          <input type="email" id="new-email" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-secondary" onclick="closeProfileModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/guard.js"></script>
+  <script src="/js/donations.js"></script>
+  <script>
+    requireAuth();
+
+    // Load profile
+    const loadProfile = async () => {
+      try {
+        const data = await userAPI.getProfile();
+        const user = data.user;
+        
+        document.getElementById('profile-info').innerHTML = `
+          <p><strong>Username:</strong> ${user.username}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Role:</strong> ${user.role}</p>
+          <p><strong>Member since:</strong> ${formatDate(user.createdAt)}</p>
+        `;
+      } catch (error) {
+        showAlert(error.message, 'error');
+      }
+    };
+
+    // Show update profile modal
+    const showUpdateProfile = () => {
+      const user = getUser();
+      document.getElementById('new-username').value = user.username;
+      document.getElementById('new-email').value = user.email;
+      document.getElementById('profile-modal').classList.add('active');
+    };
+
+    // Close profile modal
+    const closeProfileModal = () => {
+      document.getElementById('profile-modal').classList.remove('active');
+    };
+
+    // Update profile
+    document.getElementById('update-profile-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('new-username').value;
+      const email = document.getElementById('new-email').value;
+      
+      try {
+        const data = await userAPI.updateProfile({ username, email });
+        setUser(data.user);
+        showAlert('Profile updated successfully', 'success');
+        closeProfileModal();
+        loadProfile();
+        updateNavigation();
+      } catch (error) {
+        showAlert(error.message, 'error');
+      }
+    });
+
+    // Load data
+    loadProfile();
+    loadUserDonations().then(() => {
+      const count = document.querySelectorAll('#donations-container tbody tr').length;
+      document.getElementById('donation-count').textContent = count;
+    });
+  </script>
+</body>
+</html>

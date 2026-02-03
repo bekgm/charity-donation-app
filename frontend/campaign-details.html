@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaign Details - Charity Platform</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="/index.html" class="logo">CharityHub</a>
+      <div class="nav-links">
+        <a href="/index.html" class="active">Campaigns</a>
+        <span id="auth-links" class="hidden">
+          <a href="/dashboard.html">Dashboard</a>
+          <a href="/admin.html" id="admin-link" class="hidden">Admin</a>
+          <span id="user-info"></span>
+          <button onclick="logout()">Logout</button>
+        </span>
+        <span id="guest-links">
+          <a href="/login.html">Login</a>
+          <a href="/register.html" class="btn btn-primary">Sign Up</a>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h1 id="campaign-title">Loading...</h1>
+      <p id="campaign-description"></p>
+
+      <div class="grid grid-2 mt-2">
+        <div>
+          <p><strong>Category:</strong> <span id="campaign-category"></span></p>
+          <p><strong>Status:</strong> <span id="campaign-status"></span></p>
+          <p><strong>End date:</strong> <span id="campaign-end-date"></span></p>
+        </div>
+        <div>
+          <p><strong>Goal:</strong> <span id="campaign-goal"></span></p>
+          <p><strong>Raised:</strong> <span id="campaign-raised"></span></p>
+        </div>
+      </div>
+
+      <button id="donate-btn" class="btn btn-primary mt-2">
+        Donate
+      </button>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/guard.js"></script>
+  <script src="/js/campaign-details.js"></script>
+</body>
+</html>
