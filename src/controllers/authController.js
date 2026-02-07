@@ -2,16 +2,12 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const sendEmail = require('../config/mail');
 
-// Generate JWT Token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
 exports.register = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;

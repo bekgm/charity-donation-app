@@ -141,17 +141,6 @@ Topics to understand for defense:
    - Nodemailer usage
    - Error handling
 
-## 📊 Project Statistics
-
-- **Backend Files**: 17 files
-- **Frontend Files**: 10 files
-- **Total Code Files**: 34 files
-- **API Endpoints**: 15 endpoints
-- **Database Collections**: 3 collections
-- **User Roles**: 3 roles
-- **Middleware**: 4 middleware files
-- **Email Types**: 2 email templates
-
 ## 🎯 Key Features Implemented
 
 ### Backend
