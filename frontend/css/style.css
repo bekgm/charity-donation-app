@@ -667,3 +667,35 @@ table tr:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-hover);
 }
+.donation-box {
+  max-width: 300px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+}
+.logo-with-text {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.logo-with-text img {
+  height: 56px;
+  width: auto;
+}
+
+
+@media (max-width: 768px) {
+  .logo-with-text img {
+    height: 44px;
+  }
+
+  .logo-with-text {
+    font-size: 20px;
+  }
+}

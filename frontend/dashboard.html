@@ -9,12 +9,23 @@
 <body>
   <nav>
     <div class="container">
-      <a href="/index.html" class="logo">CharityHub</a>
+      <a href="/index.html" class="logo logo-with-text">
+    <img src="/assets/logo.png" alt="CharityHub Logo">
+    <span>CharityHub</span>
+    </a>
       <div class="nav-links">
         <a href="/index.html">Campaigns</a>
         <a href="/dashboard.html" class="active">Dashboard</a>
         <a href="/admin.html" id="admin-link" class="hidden">Admin</a>
-        <span id="user-info"></span>
+        <span id="user-info" class="user-info">
+        <img
+        class="user-icon"
+        src="https://www.freepik.com/premium-vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol-neumorphic-ui-ux-white-user-interface-web-button-neumorphism-vector-eps-10_18321163.html"
+        alt="User"
+        />
+  <span class="username"></span>
+</span>
+
         <button onclick="logout()">Logout</button>
       </div>
     </div>

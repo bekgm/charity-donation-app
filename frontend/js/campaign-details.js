@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // Загрузка кампании
   const loadCampaign = async () => {
     const data = await campaignAPI.getById(campaignId);
     const c = data.campaign || data;
@@ -24,7 +23,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadCampaign();
   updateNavigation();
 
-  // DONATE
   document.getElementById('donate-btn').addEventListener('click', async () => {
     if (!isAuthenticated()) {
       showAlert('Please login to donate', 'error');
@@ -32,23 +30,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    const amount = prompt('Enter donation amount');
+    const amountInput = document.getElementById('donation-amount');
+    const amount = Number(amountInput.value);
 
-    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+    if (!amount || isNaN(amount) || amount <= 0) {
       showAlert('Invalid amount', 'error');
       return;
     }
 
     try {
-     await donationAPI.create({
-  campaign: campaignId,   // 👈 ВАЖНО: имя поля
-  amount: Number(amount),
-});
-
+      await donationAPI.create({
+        campaign: campaignId,
+        amount: amount,
+      });
 
       showAlert('Thank you for your donation!', 'success');
-      await loadCampaign(); // обновляем цифры без перезагрузки
-
+      amountInput.value = '';
+      await loadCampaign();
     } catch (error) {
       showAlert(error.message, 'error');
     }
